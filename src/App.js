@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Container from '@material-ui/core/Container';
+import GlobalStyle from './assets/styles/GlobalStyle';
+import 'typeface-roboto';
 
 const StyledContainer = styled(Container)`
   background: #130f40;
@@ -10,7 +12,10 @@ const StyledContainer = styled(Container)`
 function App() {
   return (
     <div className="app">
-      <StyledContainer xl></StyledContainer>
+      <GlobalStyle />
+      <StyledContainer>
+        <h1>Hello</h1>
+      </StyledContainer>
     </div>
   );
 }
