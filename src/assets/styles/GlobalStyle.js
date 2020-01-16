@@ -14,7 +14,7 @@ body,html {
     overflow-x: hidden;
     font-family: 'Roboto', sans-serif;
 
-    background: #ecf0f1;
+    background: #353b48;
 }
 
 `;
