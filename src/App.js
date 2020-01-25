@@ -11,7 +11,7 @@ import Navbar from './components/Navbar/Navbar';
 
 // Routes
 import IndexPage from './components/IndexPage/IndexPage';
-import { GameView } from './components/GameView/GameView';
+import GameView from './components/GameView/GameView';
 
 const StyledContainer = styled(Container)`
   padding-top: 5rem;

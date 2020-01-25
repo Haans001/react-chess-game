@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -8,12 +8,9 @@ const StyledCell = styled.div`
     isBlack ? theme.colors.darkYellow : theme.colors.lightYellow};
 `;
 
-class Cell extends Component {
-  render() {
-    const { x, y, isBlack, number } = this.props;
-    return <StyledCell>{`${x},${y}     ${number}`}</StyledCell>;
-  }
-}
+const Cell = ({ x, y, isBlack }) => {
+  return <StyledCell isBlack={isBlack}>{`${x},${y}`}</StyledCell>;
+};
 
 const mapStateToProps = state => ({});
 

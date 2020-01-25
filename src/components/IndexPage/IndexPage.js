@@ -1,61 +1,44 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import { Button } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
+import createNewGame, {
+  clearCreatingNewGame,
+} from '../../store/actions/gameControllerActions';
 
-class IndexPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.startNewGame = this.startNewGame.bind(this);
-    this.state = {
-      newGameRequestSuccess: false,
-      newGameId: null,
-    };
-  }
-
+class IndexPage extends Component {
   componentWillUnmount() {
-    this.setState({
-      newGameRequestSuccess: false,
-    });
-  }
-
-  startNewGame() {
-    axios
-      .get('/game_controller/create_new_game')
-      .then(res => {
-        console.log(res);
-        this.setState({
-          newGameRequestSuccess: true,
-          newGameId: res.data.id,
-        });
-      })
-      .catch(err => {
-        console.log(err);
-        this.setState({
-          newGameRequestSuccess: false,
-        });
-      });
+    const { _clearCreatingNewGame } = this.props;
+    _clearCreatingNewGame();
   }
 
   render() {
-    const { newGameRequestSuccess, newGameId } = this.state;
+    const { _createNewGame, gameCreateSuccess, gameID } = this.props;
     return (
       <div>
-        <Button onClick={this.startNewGame} color="success">
+        <Button onClick={_createNewGame} color="success">
           Play with friend!
         </Button>
-        {newGameRequestSuccess ? <Redirect to={newGameId} /> : null}
+        {gameCreateSuccess ? <Redirect to={`/${gameID}`} /> : null}
       </div>
     );
   }
 }
 const mapDispatchToProps = {
-  // requestCreatingNewGame,
+  _createNewGame: createNewGame,
+  _clearCreatingNewGame: clearCreatingNewGame,
 };
 const mapStateToProps = state => ({
-  // newGameRequestSuccess: state.apiGameController.newGameRequestSuccess,
+  gameCreateSuccess: state.gameController.gameCreateSuccess,
+  gameID: state.gameController.gameID,
 });
+
+IndexPage.propTypes = {
+  _createNewGame: PropTypes.func.isRequired,
+  _clearCreatingNewGame: PropTypes.func.isRequired,
+  gameCreateSuccess: PropTypes.bool.isRequired,
+  gameID: PropTypes.string.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(IndexPage);

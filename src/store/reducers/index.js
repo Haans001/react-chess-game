@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import apiGameController from './apiGameController';
+import gameController from './gameControllerReducer';
+import playerController from './playerReducer';
 
 export default combineReducers({
-  apiGameController,
+  gameController,
+  playerController,
 });

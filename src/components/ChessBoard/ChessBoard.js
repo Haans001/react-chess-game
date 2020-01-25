@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Cell from '../Cell/Cell';
@@ -16,7 +16,7 @@ export default class ChessBoard extends Component {
     super(props);
     this.rows = 8;
     this.cols = 8;
-    this.board = createRef();
+    this.board = React.createRef();
     this.state = {
       boardHeight: 0,
     };
@@ -29,25 +29,29 @@ export default class ChessBoard extends Component {
   }
 
   setBoardHeight() {
-    this.setState({
-      boardHeight: this.board.current.clientWidth,
-    });
+    if (this.board.current) {
+      this.setState({
+        boardHeight: this.board.current.clientWidth,
+      });
+    }
   }
 
   render() {
     const { boardHeight } = this.state;
     const { board } = this.props;
     return (
-      <StyledBoard ref={this.board} height={boardHeight}>
-        {board &&
-          board.map(row =>
-            row.map((cell, index) => <Cell key={index} {...cell} />)
-          )}
-      </StyledBoard>
+      <div>
+        <StyledBoard ref={this.board} height={boardHeight}>
+          {board &&
+            board.map(row =>
+              row.map((cell, index) => <Cell key={index} {...cell} />)
+            )}
+        </StyledBoard>
+      </div>
     );
   }
 }
 
 ChessBoard.propTypes = {
-  board: PropTypes.arrayOf().isRequired,
+  board: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape())).isRequired,
 };
