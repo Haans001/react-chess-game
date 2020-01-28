@@ -48,7 +48,7 @@ class GameView extends Component {
 }
 
 const mapStateToProps = state => ({
-  board: state.gameController.game.board,
+  board: state.game.board,
   isGameExist: state.gameController.isGameExist,
   isGameFull: state.gameController.game.isFull,
   playerType: state.playerController.player.playerType,

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import setPlayer from './playerActions';
+import createPiece from '../../gameHelpers/pieces/createPiece';
 
 const createNewGame = () => dispatch => {
   axios
@@ -29,10 +30,28 @@ export const setCurrentGame = gameID => dispatch => {
     .get(`/game_controller/get_game/${gameID}`)
     .then(res => {
       const { game } = res.data;
+      const board = game.board.map(row =>
+        row.map(cell => {
+          return {
+            ...cell,
+            piece: createPiece(cell.piece),
+            active: false,
+          };
+        })
+      );
+
+      game.board = undefined;
+
       dispatch({
         type: 'SET_GAME',
         payload: {
           game,
+        },
+      });
+      dispatch({
+        type: 'SET_BOARD',
+        payload: {
+          board,
         },
       });
     })
