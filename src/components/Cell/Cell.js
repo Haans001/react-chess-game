@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import setActiveCell from '../../store/actions/gameActions';
 
 const StyledCell = styled.div`
@@ -35,7 +35,6 @@ const Cell = ({ x, y, isBlack, piece, active }) => {
   const handleClick = () => {
     dispatch(setActiveCell(x, y));
   };
-
   return (
     <StyledCell isActiveCell={active} isBlack={isBlack} onClick={handleClick}>
       {piece.color ? <img src={piece.image} alt="" /> : null}

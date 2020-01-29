@@ -13,7 +13,8 @@ body,html {
     margin  :0;  
     overflow-x: hidden;
     font-family: 'Roboto', sans-serif;
-
+    width: 100%;
+    height:100%;
     background: #353b48;
 }
 

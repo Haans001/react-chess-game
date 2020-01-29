@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Cell from '../Cell/Cell';
+import { connect } from 'react-redux';
 
 const StyledBoard = styled.div`
   width: 100%;
@@ -11,7 +12,7 @@ const StyledBoard = styled.div`
   height: ${({ height }) => `${height}px`};
 `;
 
-export default class ChessBoard extends Component {
+class ChessBoard extends Component {
   constructor(props) {
     super(props);
     this.rows = 8;
@@ -52,6 +53,12 @@ export default class ChessBoard extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  board: state.game.board,
+});
+
 ChessBoard.propTypes = {
   board: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape())).isRequired,
 };
+
+export default connect(mapStateToProps)(ChessBoard);

@@ -2,10 +2,7 @@ const initialState = {
   gameCreateSuccess: false,
   gameID: null,
   isGameExist: true,
-  game: {
-    board: [],
-    isFull: false,
-  },
+  isFull: false,
 };
 
 export default function(state = initialState, { type, payload }) {
@@ -21,7 +18,9 @@ export default function(state = initialState, { type, payload }) {
     case 'SET_GAME': {
       return {
         ...state,
-        game: payload.game,
+        isGameExist: true,
+        isFull: payload.game.isFull,
+        gameID: payload.game.id,
       };
     }
     case 'GAME_CREATE_FAILED': {

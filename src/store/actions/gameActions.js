@@ -5,6 +5,7 @@ const setActiveCell = (x, y) => (dispatch, getState) => {
   const newBoard = JSON.parse(JSON.stringify(board));
 
   newBoard[x][y].active = true;
+  let cell = newBoard[x][y];
 
   if (
     Object.prototype.hasOwnProperty.call(activeCell, 'x') &&
@@ -13,12 +14,13 @@ const setActiveCell = (x, y) => (dispatch, getState) => {
     newBoard[activeCell.x][activeCell.y].active = false;
   } else if (activeCell === board[x][y] && board[x][y].active) {
     newBoard[x][y].active = false;
+    cell = {};
   }
 
   dispatch({
     type: 'SET_ACTIVE_CELL',
     payload: {
-      cell: newBoard[x][y],
+      cell,
     },
   });
 

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import io from 'socket.io-client';
 import setPlayer from './playerActions';
 import createPiece from '../../gameHelpers/pieces/createPiece';
 
@@ -9,7 +10,7 @@ const createNewGame = () => dispatch => {
       dispatch({
         type: 'GAME_CREATE_SUCCESS',
         payload: {
-          gameID: res.data.game.id,
+          gameID: res.data.gameID,
         },
       });
       localStorage.setItem('token', res.data.playerID);
@@ -29,6 +30,11 @@ export const setCurrentGame = gameID => dispatch => {
   axios
     .get(`/game_controller/get_game/${gameID}`)
     .then(res => {
+      const socket = io(`http://localhost:5000/${gameID}`);
+      socket.on('reply', function(data) {
+        console.log(data);
+      });
+
       const { game } = res.data;
       const board = game.board.map(row =>
         row.map(cell => {
@@ -40,23 +46,19 @@ export const setCurrentGame = gameID => dispatch => {
         })
       );
 
-      game.board = undefined;
-
       dispatch({
         type: 'SET_GAME',
         payload: {
           game,
         },
       });
+
       dispatch({
         type: 'SET_BOARD',
         payload: {
           board,
         },
       });
-    })
-    .then(() => {
-      dispatch(setPlayer(gameID));
     })
     .catch(() => {
       dispatch({
@@ -79,9 +81,7 @@ export const joinGame = gameID => dispatch => {
         },
       });
     })
-    .then(() => {
-      dispatch(setPlayer(gameID));
-    });
+    .catch(err => console.log(err));
 };
 
 export default createNewGame;

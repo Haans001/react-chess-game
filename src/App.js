@@ -11,7 +11,7 @@ import Navbar from './components/Navbar/Navbar';
 
 // Routes
 import IndexPage from './components/IndexPage/IndexPage';
-import GameView from './components/GameView/GameView';
+import GamePage from './components/GamePage/GamePage';
 
 const StyledContainer = styled(Container)`
   padding-top: 5rem;
@@ -28,7 +28,7 @@ function App() {
             <StyledContainer>
               <Switch>
                 <Route exact path="/" component={IndexPage} />
-                <Route path="/:game_id" component={GameView} />
+                <Route path="/:game_id" component={GamePage} />
               </Switch>
             </StyledContainer>
           </ReduxProvider>
