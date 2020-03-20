@@ -4,6 +4,7 @@ const initialState = {
   },
   userLoaded: false,
   playerError: null,
+  socket: null,
 };
 
 export default function(state = initialState, { type, payload }) {
@@ -24,6 +25,13 @@ export default function(state = initialState, { type, payload }) {
         // },
         userLoaded: true,
         playerError: payload.error,
+      };
+    }
+
+    case 'SET_SOCKET': {
+      return {
+        ...state,
+        socket: payload,
       };
     }
 

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import GameView from '../GameView/GameView';
 import JoinGameView from '../JoinGameView/JoinGameView';
+import InviteView from '../InviteView/InviteView';
 import { setCurrentGame } from '../../store/actions/gameControllerActions';
 import UserPreload from '../UserPreload/UserPreload';
 
@@ -31,8 +32,7 @@ class GamePage extends Component {
     );
 
     if (!isGameFull && !playerType) gameState = <JoinGameView />;
-    // else if (!isGameFull && playerType === 'xd')
-    //   gameState = <h1>Invite to game</h1>; Here i will set InviteView component
+    else if (!isGameFull && playerType) gameState = <InviteView />;
     else gameState = <GameView />;
 
     return (

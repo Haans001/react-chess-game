@@ -30,11 +30,6 @@ export const setCurrentGame = gameID => dispatch => {
   axios
     .get(`/game_controller/get_game/${gameID}`)
     .then(res => {
-      const socket = io(`http://localhost:5000/${gameID}`);
-      socket.on('reply', function(data) {
-        console.log(data);
-      });
-
       const { game } = res.data;
       const board = game.board.map(row =>
         row.map(cell => {
@@ -67,13 +62,14 @@ export const setCurrentGame = gameID => dispatch => {
     });
 };
 
-export const joinGame = gameID => dispatch => {
+export const joinGame = gameID => (dispatch, getState) => {
+  const { socket } = getState().playerController;
   axios
     .get(`/game_controller/join_game/${gameID}`)
     .then(res => {
       const { game } = res.data;
       localStorage.setItem('token', res.data.playerID);
-
+      socket.emit('join_game');
       dispatch({
         type: 'SET_GAME',
         payload: {
